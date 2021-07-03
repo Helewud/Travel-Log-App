@@ -1,3 +1,5 @@
 server/src/config/
 server/node_modules/
 .eslintrc.js
+
+.gitignore

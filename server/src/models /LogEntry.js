@@ -28,13 +28,13 @@ const logEntrySchema = new mongoose.Schema(
       type: String,
     },
     longitude: {
-      type: mongoose.Decimal128,
+      type: Number,
       required: true,
       min: -180,
       max: 180,
     },
     latitude: {
-      type: mongoose.Decimal128,
+      type: Number,
       required: true,
       min: -90,
       max: 90,
