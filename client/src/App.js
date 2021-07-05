@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import ReactMapGL, { NavigationControl, Marker, Popup } from "react-map-gl";
 import { listLogEntries } from "./API";
+import LogEntryForm from "./logEntryForm";
 
 const navControlStyle = {
   right: 10,
@@ -69,10 +70,8 @@ function App(props) {
                   }}
                   viewBox="0 0 24 24"
                   stroke="black"
-                  stroke-width="1"
+                  strokeWidth="1"
                   fill="yellow"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
                 >
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                   <circle cx="12" cy="10" r="3"></circle>
@@ -102,16 +101,39 @@ function App(props) {
               : null}
             {addEntryLocation ? (
               <>
+                <Marker
+                  key={entry._id}
+                  latitude={addEntryLocation.latitude}
+                  longitude={addEntryLocation.longitude}
+                >
+                  <div>
+                    <svg
+                      style={{
+                        width: "24px",
+                        height: "24px",
+                        transform: "translate(-50%, -100% )",
+                      }}
+                      viewBox="0 0 24 24"
+                      stroke="yellow"
+                      strokeWidth="2"
+                      fill="black"
+                    >
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                  </div>
+                </Marker>
                 <Popup
                   latitude={addEntryLocation.latitude}
                   longitude={addEntryLocation.longitude}
-                  //   closeButton={true}
-                  //   closeOnClick={true}
-                  //   onClose={() => setAddEntryLocation(null)}
-                  //   anchor="top"
+                  closeButton={true}
+                  closeOnClick={true}
+                  dynamicPosition={true}
+                  //   onClose={() => setAddEntryLocation(false)}
+                  anchor="top"
                 >
                   <div className="popup">
-                    <h4>Add your new log entry here</h4>
+                    <LogEntryForm />
                   </div>
                 </Popup>
               </>
