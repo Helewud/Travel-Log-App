@@ -41,40 +41,50 @@ body {
     resize: none;
 }
 
-.rating:not(old) {
-    display : inline-block;
-    /* width : 7.5em; */
-    /* height : 1.5em; */
-    overflow : hidden;
-    vertical-align : bottom;
+
+/* Star Rating */
+.rated {
+    margin: 8% 0 -8% 0;
+    top: 100%;
+    float: left;
+    overflow:hidden;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: row-reverse;
 }
 
-.rating:not(old) > input {
-    margin-right: -100%;
+.rated input {
+    display: none;
+}
+
+.rated label {
+    display: inline-block;
+    cursor: pointer;
+    width: 28px;
+}
+
+.rated label:before {
+    content: '☆';
+    display: block;
+    position: relative;
+    color: grey;
+    font-size: 30px;
+}
+
+.rated label:after {
+    content: '★';
+    display: block;
+    position: absolute;
+    color: yellow;
+    font-size: 30px;
+    top: 0;
     opacity: 0;
+    transition: .2s;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5)
 }
 
-.rating:not(old) > label {
-   display : block;
-   float : right;
-   position : relative;
-   background : url(https://www.freepnglogos.com/uploads/star-png/file-star-empty-svg-wikimedia-commons-3.png);
-   background-size : contain;
-}
-
-.rating:not(old)>label:before {
-    content : '';
-    display : block;
-    width : 1.5em;
-    height : 1.5em;
-    background : url(https://www.freepnglogos.com/uploads/star-png/file-gold-star-svg-wikimedia-commons-6.png);
-    background-size : contain;
-    opacity: 0;
-    transition: opacity 0.2s linear; 
-}
-
-.rating:not(old)>label:hover:before,
-.rating:not(old)>label:hover~label:before,
-.rating:not(:hover)> :checked~label:before {
+.rated input[checked]~label:after {
     opacity: 1;
 }

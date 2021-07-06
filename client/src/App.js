@@ -78,27 +78,43 @@ function App(props) {
                 </svg>
               </div>
             </Marker>
-            {showPopup[entry._id]
-              ? showPopup && (
-                  <Popup
-                    latitude={entry.latitude}
-                    longitude={entry.longitude}
-                    closeButton={true}
-                    closeOnClick={true}
-                    onClose={() => setShowPopup({})}
-                    anchor="top"
-                  >
-                    <div className="popup">
-                      <h4>{entry.title}</h4>
-                      <p>{entry.comments}</p>
-                      <small>
-                        Visited on:{" "}
-                        {new Date(entry.visitDate).toLocaleDateString()}
-                      </small>
-                    </div>
-                  </Popup>
-                )
-              : null}
+
+            {showPopup[entry._id] ? (
+              <Popup
+                latitude={entry.latitude}
+                longitude={entry.longitude}
+                closeButton={true}
+                closeOnClick={true}
+                dynamicPosition={true}
+                onClose={() => setShowPopup({})}
+                anchor="top"
+              >
+                <div className="popup">
+                  <h4>{entry.title}</h4>
+                  <p>{entry.comments}</p>
+                  <small>
+                    Visited on: {new Date(entry.visitDate).toLocaleDateString()}
+                  </small>
+                  <div className="rated">
+                    {[5, 4, 3, 2, 1].map((num) => {
+                      return (
+                        <>
+                          <input
+                            checked={entry.rating === num ? true : false}
+                            id={num}
+                            type="radio"
+                            value={num}
+                            readOnly
+                          />
+                          <label disabled htmlFor={num}></label>
+                        </>
+                      );
+                    })}
+                  </div>
+                </div>
+              </Popup>
+            ) : null}
+
             {addEntryLocation ? (
               <>
                 <Marker
