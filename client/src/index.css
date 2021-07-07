@@ -1,53 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-        sans-serif;
+    font-family: -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    'Roboto',
+    'Oxygen',
+    'Ubuntu',
+    'Cantarell',
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    'sans-serif';
 }
 
-.map-container {
-    height: 100vh;
-    width: 100%;
-    overflow: hidden;
+.mapboxgl-popup-content {
+    padding: 5px !important;
 }
 
-.sidebar {
-    background-color: rgba(35, 55, 75, 0.9);
-    color: #ffffff;
-    padding: 6px 12px;
-    font-family: monospace;
-    z-index: 1;
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin: 12px;
-    border-radius: 4px;
-}
-
-.popup {
+/* Display Card(popup) */
+.display-card {
     width: 200px;
     text-align: center;
+
 }
 
-.fm-1 {
-    /* background-color: red; */
+/* Info Card(popup)*/
+
+.display-card .display-image {
+    width: 200px;
+    height: 100px;
+}
+
+.display-card .display-image img {
     width: 100%;
-    padding: 10px 10px;
-    margin: 2px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    resize: none;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50%, 50%;
 }
 
+.display-card h3 {
+    margin: 10px;
+    font-family: 'Poppins',sans-serif; 
+}
 
-/* Star Rating */
-.rated {
+.display-card fieldset legend {
+    font-size: 11px;
+    font-weight: 400;
+
+  
+}
+
+/* rated star */
+.display-rated {
     margin: 8% 0 -8% 0;
     top: 100%;
     float: left;
-    overflow:hidden;
+    overflow: hidden;
     position: relative;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -55,36 +65,62 @@ body {
     flex-direction: row-reverse;
 }
 
-.rated input {
+.display-rated input {
     display: none;
 }
 
-.rated label {
+.display-rated label {
     display: inline-block;
     cursor: pointer;
-    width: 28px;
+    width: 22px;
 }
 
-.rated label:before {
+.display-rated label:before {
     content: '☆';
     display: block;
     position: relative;
     color: grey;
-    font-size: 30px;
+    font-size: 25px;
 }
 
-.rated label:after {
+.display-rated label:after {
     content: '★';
     display: block;
     position: absolute;
     color: yellow;
-    font-size: 30px;
+    font-size: 25px;
     top: 0;
     opacity: 0;
     transition: .2s;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5)
 }
 
-.rated input[checked]~label:after {
+.display-rated input[checked]~label:after {
     opacity: 1;
 }
+
+/* Form Card */
+
+.display-form {
+    width: 100%;
+    padding: 10px 10px;
+    margin: 4px 0;
+    display: inline-block;
+    border: 1px solid rgb(228, 219, 219);
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: none;
+}
+
+.display-card input[type=submit].display-form {
+    background-color: #3cc571;
+    color: #fff;
+    font-family: 'Poppins',sans-serif;
+    font-weight: 700;
+}
+
+.display-card input[type=submit].display-form:hover {
+    background-color: #278b4e;
+}
+
+/* form card rating */
