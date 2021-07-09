@@ -1,8 +1,10 @@
 import React from "react";
+const url = process.env.REACT_APP_API + "/api/logs";
 
 const logForm = () => {
+  console.log(url);
   return (
-    <form>
+    <form action={url} method="POST" encType="multipart/form-data">
       <input
         className="display-form"
         type="text"
@@ -15,8 +17,12 @@ const logForm = () => {
         name="description"
         placeholder="Description"
       />
-      <textarea className="display-form" name="comment" placeholder="Comment" />
-      <input className="display-form" type="file" name="filename"></input>
+      <textarea
+        className="display-form"
+        name="comments"
+        placeholder="Comment"
+      />
+      <input className="display-form" type="file" name="image"></input>
       <select
         className="display-form"
         placeholder="Rate your experience"
@@ -26,12 +32,12 @@ const logForm = () => {
       >
         <option value="">--rate your experience--</option>
         <option value="1">😡 Poor</option>
-        <option value="2">😏 Good</option>
-        <option value="3">🙂 Average</option>
+        <option value="2">😏 Average</option>
+        <option value="3">🙂 Good</option>
         <option value="4">😊 Great</option>
         <option value="5">😁 Excellent</option>
       </select>
-      <input className="display-form" type="date" />
+      <input className="display-form" type="Date" name="visitDate" />
       <input className="display-form" type="submit"></input>
     </form>
   );
