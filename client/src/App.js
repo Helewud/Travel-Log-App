@@ -14,8 +14,8 @@ function App() {
   const [showPopup, togglePopup] = useState({});
   const [addEntryLocation, setAddEntryLocation] = useState(null);
   const [viewport, setViewport] = useState({
-    latitude: 9.080368623172363,
-    longitude: 7.355115034132979,
+    latitude: 9,
+    longitude: 7,
     zoom: 6,
   });
 
