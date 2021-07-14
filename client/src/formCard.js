@@ -1,33 +1,42 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 const url = process.env.REACT_APP_API + "/api/logs";
 
-const logForm = () => {
+const LogForm = () => {
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data) => console.log(data);
+
   console.log(url);
   return (
-    <form action={url} method="POST" encType="multipart/form-data">
+    <form onSubmit={handleSubmit(onSubmit)}>
       <input
         className="display-form"
-        type="text"
-        name="title"
+        {...register("title", { required: true })}
+        // type="text"
         placeholder="Title"
-      ></input>
+      />
       <textarea
         className="display-form"
-        type="text"
-        name="description"
+        // type="text"
+        {...register("description")}
         placeholder="Description"
+        rows={3}
       />
       <textarea
         className="display-form"
-        name="comments"
+        {...register("comment")}
         placeholder="Comment"
+        rows={3}
       />
-      <input className="display-form" type="file" name="image"></input>
+      <input
+        className="display-form"
+        type="file"
+        {...register("image", { required: true })}
+      ></input>
       <select
         className="display-form"
         placeholder="Rate your experience"
-        name="rating"
-        required
+        {...register("rating", { required: true })}
         id="rate"
       >
         <option value="">--rate your experience--</option>
@@ -37,10 +46,14 @@ const logForm = () => {
         <option value="4">😊 Great</option>
         <option value="5">😁 Excellent</option>
       </select>
-      <input className="display-form" type="Date" name="visitDate" />
+      <input
+        className="display-form"
+        type="Date"
+        {...register("visitDate", { required: true })}
+      />
       <input className="display-form" type="submit"></input>
     </form>
   );
 };
 
-export default logForm;
+export default LogForm;
