@@ -1,14 +1,22 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-const url = process.env.REACT_APP_API + "/api/logs";
+import { createLogEntry } from "./api";
 
-const LogForm = () => {
+const LogForm = ({ location }) => {
   const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      data.latitude = location.latitude;
+      data.longitude = location.longitude;
+      const created = await createLogEntry(data);
+      console.log(created);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  console.log(url);
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
       <input
         className="display-form"
         {...register("title", { required: true })}

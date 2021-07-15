@@ -10,7 +10,7 @@ const logEntrySchema = new mongoose.Schema(
     description: {
       type: String,
     },
-    comments: {
+    comment: {
       type: String,
     },
     rating: {
@@ -25,7 +25,8 @@ const logEntrySchema = new mongoose.Schema(
       required: true,
     },
     image: {
-      type: String,
+      data: Buffer,
+      contentType: String,
     },
     longitude: {
       type: Number,

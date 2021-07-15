@@ -6,6 +6,11 @@ const { catchErrors } = require("../middlewares/errorHandler");
 
 router.get("/api/logs", catchErrors(logController.getLog));
 
-router.post("/api/logs", joiValidate, catchErrors(logController.postLog));
+router.post(
+  "/api/logs",
+  joiValidate,
+  logController.upload,
+  catchErrors(logController.postLog)
+);
 
 module.exports = router;

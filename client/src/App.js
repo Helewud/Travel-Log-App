@@ -1,6 +1,11 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import ReactMapGL, { NavigationControl, Marker, Popup } from "react-map-gl";
+import ReactMapGL, {
+  NavigationControl,
+  Marker,
+  Popup,
+  GeolocateControl,
+} from "react-map-gl";
 import { allLogEntries } from "./api";
 import LogForm from "./formCard";
 
@@ -34,6 +39,11 @@ function App() {
     });
   };
 
+  const geolocateControlStyle = {
+    right: 10,
+    top: 10,
+  };
+
   return (
     <ReactMapGL
       {...viewport}
@@ -46,6 +56,12 @@ function App() {
       onDblClick={showAddMarkerPopup}
     >
       <NavigationControl style={navControlStyle} />
+      <GeolocateControl
+        style={geolocateControlStyle}
+        positionOptions={{ enableHighAccuracy: true }}
+        trackUserLocation={true}
+        auto
+      />
 
       {logEntries.map((location) => {
         return (
@@ -105,7 +121,7 @@ function App() {
                   </fieldset>
                   <fieldset>
                     <legend>Comment</legend>
-                    <small>{location.comments}</small>
+                    <small>{location.comment}</small>
                   </fieldset>
                   <fieldset>
                     <legend>Rating</legend>
@@ -174,7 +190,7 @@ function App() {
                   anchor="top"
                 >
                   <div className="display-card">
-                    <LogForm />
+                    <LogForm location={addEntryLocation} />
                   </div>
                 </Popup>
               </>
