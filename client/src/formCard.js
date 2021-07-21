@@ -4,12 +4,20 @@ import { createLogEntry } from "./api";
 
 const LogForm = ({ location }) => {
   const { register, handleSubmit } = useForm();
+
   const onSubmit = async (data) => {
     try {
-      data.latitude = location.latitude;
-      data.longitude = location.longitude;
-      const created = await createLogEntry(data);
-      console.log(created);
+      const form = new FormData();
+
+      form.append("latitude", location.latitude);
+      form.append("longitude", location.longitude);
+
+      for (const key in data) {
+        form.append(key, data[key]);
+      }
+      form.set("image", data.image[0]);
+
+      await createLogEntry(form);
     } catch (error) {
       console.error(error);
     }
@@ -20,12 +28,12 @@ const LogForm = ({ location }) => {
       <input
         className="display-form"
         {...register("title", { required: true })}
-        // type="text"
+        type="text"
         placeholder="Title"
       />
       <textarea
         className="display-form"
-        // type="text"
+        type="text"
         {...register("description")}
         placeholder="Description"
         rows={3}
@@ -39,6 +47,7 @@ const LogForm = ({ location }) => {
       <input
         className="display-form"
         type="file"
+        accept="image/*"
         {...register("image", { required: true })}
       ></input>
       <select

@@ -7,7 +7,6 @@ const joiValidate = (req, res, next) => {
     comment: Joi.string().max(1000),
     rating: Joi.number().min(1).max(5).required(),
     visitDate: Joi.date(),
-    image: Joi.any(),
     longitude: Joi.number().required(),
     latitude: Joi.number().required(),
   });
