@@ -17,6 +17,7 @@ body {
 
 .mapboxgl-popup-content {
     padding: 5px !important;
+    z-index: 5 !important;
 }
 
 /* Display Card(popup) */
