@@ -2,7 +2,8 @@ const LogEntry = require("../models /LogEntry");
 const cloudinary = require("cloudinary").v2;
 const streamifier = require("streamifier");
 
-const cld = () => {
+// cloudinary confiq
+const cloudiaryConfig = () => {
   return cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.API_KEY,
@@ -12,17 +13,22 @@ const cld = () => {
 };
 
 exports.postLog = async (req, res) => {
-  cld();
-
+  cloudiaryConfig();
+  // cloudinary stream uploasd method
   let streamUpload = (req) => {
     return new Promise((resolve, reject) => {
-      let stream = cloudinary.uploader.upload_stream((error, result) => {
-        if (result) {
-          resolve(result);
-        } else {
-          reject(error);
+      let stream = cloudinary.uploader.upload_stream(
+        { quality: 50 },
+        (error, result) => {
+          if (result) {
+            resolve(result);
+          } else {
+            reject(error);
+          }
         }
-      });
+      );
+
+      //   converting image buffer to streamm
       return streamifier.createReadStream(req.file.buffer).pipe(stream);
     });
   };
@@ -34,7 +40,7 @@ exports.postLog = async (req, res) => {
     const logger = await logEntry.save({
       new: true,
     });
-    res.json(logger);
+    res.send(logger);
   }
 
   upload(req);
