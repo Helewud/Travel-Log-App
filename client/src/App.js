@@ -24,12 +24,12 @@ function App() {
     longitude: 7,
     zoom: 6,
   });
-
+  const getEntries = async () => {
+    const logEntries = await allLogEntries();
+    setLogEntries(logEntries);
+  };
   useEffect(() => {
-    (async () => {
-      const logEntries = await allLogEntries();
-      setLogEntries(logEntries);
-    })();
+    getEntries();
   }, []);
 
   const showAddMarkerPopup = (e) => {
@@ -55,6 +55,7 @@ function App() {
       maxZoom={16}
       onViewportChange={(nextViewport) => setViewport(nextViewport)}
       onDblClick={showAddMarkerPopup}
+      keyboard={false}
     >
       <NavigationControl style={navControlStyle} />
       <GeolocateControl
@@ -148,11 +149,17 @@ function App() {
                   closeButton={true}
                   closeOnClick={true}
                   dynamicPosition={true}
-                  //   onClose={() => setAddEntryLocation(false)}
+                  onClose={() => togglePopup({})}
                   anchor="top"
                 >
                   <div className="display-card">
-                    <LogForm location={addEntryLocation} />
+                    <LogForm
+                      onClose={() => {
+                        setAddEntryLocation(null);
+                        getEntries();
+                      }}
+                      location={addEntryLocation}
+                    />
                   </div>
                 </Popup>
               </>

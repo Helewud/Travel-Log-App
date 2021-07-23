@@ -1,14 +1,18 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm, useFormState } from "react-hook-form";
 import { createLogEntry } from "./api";
 
-const LogForm = ({ location }) => {
-  const { register, handleSubmit } = useForm();
+const LogForm = ({ location, onClose }) => {
+  //   let [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const { register, handleSubmit, control } = useForm();
 
+  const { isSubmitted, isSubmitSuccessful } = useFormState({
+    control,
+  });
   const onSubmit = async (data) => {
     try {
       const form = new FormData();
-
       form.append("latitude", location.latitude);
       form.append("longitude", location.longitude);
 
@@ -16,17 +20,22 @@ const LogForm = ({ location }) => {
         form.append(key, data[key]);
       }
       form.set("image", data.image[0]);
-
-      await createLogEntry(form);
+      setTimeout(() => {
+        createLogEntry(form);
+        onClose();
+      }, 10000);
     } catch (error) {
-      console.error(error);
+      setError(error.message);
     }
   };
 
+  const currentDate = new Date(Date.now()).toISOString().split("T")[0];
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+      {/* {error ? <small>{error}</small> : null} */}
       <input
-        className="display-form"
+        className="display-form start"
         {...register("title", { required: true })}
         type="text"
         placeholder="Title"
@@ -66,9 +75,15 @@ const LogForm = ({ location }) => {
       <input
         className="display-form"
         type="Date"
+        max={currentDate}
+        value={currentDate}
         {...register("visitDate", { required: true })}
       />
-      <input className="display-form" type="submit"></input>
+      {isSubmitted && isSubmitSuccessful ? (
+        <div className="lds-dual-ring"></div>
+      ) : (
+        <input className="display-form" type="submit"></input>
+      )}
     </form>
   );
 };

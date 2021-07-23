@@ -1,3 +1,5 @@
+import * as React from "react";
+
 const displayCard = ({ location }) => {
   return (
     <div className="display-card">
@@ -19,7 +21,7 @@ const displayCard = ({ location }) => {
         <div className="display-rated">
           {[5, 4, 3, 2, 1].map((num) => {
             return (
-              <>
+              <React.Fragment key={num}>
                 <input
                   checked={location.rating === num ? true : false}
                   id={num}
@@ -28,7 +30,7 @@ const displayCard = ({ location }) => {
                   readOnly
                 />
                 <label disabled htmlFor={num}></label>
-              </>
+              </React.Fragment>
             );
           })}
         </div>
