@@ -93,7 +93,7 @@ body {
     top: 0;
     opacity: 0;
     transition: .2s;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5)
+    text-shadow: 0 1px 1px #00000080
 }
 
 .display-rated input[checked]~label:after {
@@ -101,13 +101,15 @@ body {
 }
 
 /* Form Card */
-
+.start{
+    margin-top: 20px !important;
+}
 .display-form {
     width: 100%;
     padding: 10px 10px;
     margin: 4px 0;
     display: inline-block;
-    border: 1px solid rgb(228, 219, 219);
+    border: 1px solid #e4dbdb;
     border-radius: 4px;
     box-sizing: border-box;
     resize: none;
@@ -124,4 +126,46 @@ body {
     background-color: #278b4e;
 }
 
-/* form card rating */
+.display-card input.display-form[type=submit][disabled] {
+    background-color: #9b1e1e;
+}
+
+/* Spinner */
+
+.lds-dual-ring {
+    background-color: #065826;
+     width: 100%;
+     padding: 10px 10px;
+     margin: 4px 0;
+     display: inline-block;
+     border: 1px solid #065826;
+     border-radius: 4px;
+     box-sizing: border-box;
+     color: #fff;
+     font-family: 'Poppins',
+     sans-serif;
+     font-weight: 700;
+     font-size: 13.3333px;
+}
+
+.lds-dual-ring:after {
+    content: " ";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: 10px;   
+    border-radius: 100%;
+    border: 2px solid #ffffff;
+    border-color: #ffffff transparent #ffffff transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
