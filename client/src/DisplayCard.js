@@ -2,7 +2,7 @@ import * as React from "react";
 
 const displayCard = ({ location }) => {
   return (
-    <div className="display-card">
+    <div className="display-card start">
       <div className="display-image">
         <img src={location.image} alt="location-header"></img>
       </div>
