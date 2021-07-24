@@ -24,14 +24,18 @@ function App() {
     longitude: 7,
     zoom: 6,
   });
+
+  // importing of all saved entries
   const getEntries = async () => {
     const logEntries = await allLogEntries();
     setLogEntries(logEntries);
   };
+
   useEffect(() => {
     getEntries();
   }, []);
 
+  // setting the current longitude and latitude
   const showAddMarkerPopup = (e) => {
     const [longitude, latitude] = e.lngLat;
     setAddEntryLocation({
@@ -40,12 +44,15 @@ function App() {
     });
   };
 
+  // map function for controlling the gps location
   const geolocateControlStyle = {
     right: 10,
     top: 10,
   };
 
+  // main map
   return (
+    //   rendering of the map
     <ReactMapGL
       {...viewport}
       width="100VW"
@@ -68,6 +75,7 @@ function App() {
       {logEntries.map((location) => {
         return (
           <>
+            {/* marker to show each saved location on the map */}
             <Marker
               key={location._id}
               latitude={location.latitude}
@@ -101,6 +109,7 @@ function App() {
               </div>
             </Marker>
 
+            {/* function to display the location details */}
             {showPopup[location._id] ? (
               <Popup
                 latitude={location.latitude}
@@ -115,6 +124,7 @@ function App() {
               </Popup>
             ) : null}
 
+            {/* marker to  indicate new location to be saved */}
             {addEntryLocation ? (
               <>
                 <Marker
@@ -147,9 +157,9 @@ function App() {
                   latitude={addEntryLocation.latitude}
                   longitude={addEntryLocation.longitude}
                   closeButton={true}
-                  closeOnClick={true}
+                  closeOnClick={false}
                   dynamicPosition={true}
-                  onClose={() => togglePopup({})}
+                  onClose={() => setAddEntryLocation(false)}
                   anchor="top"
                 >
                   <div className="display-card">

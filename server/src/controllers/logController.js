@@ -13,8 +13,10 @@ const cloudiaryConfig = () => {
 };
 
 exports.postLog = async (req, res) => {
+  // initailizing cloudinary config function
   cloudiaryConfig();
-  // cloudinary stream uploasd method
+
+  // cloudinary stream upload method
   let streamUpload = (req) => {
     return new Promise((resolve, reject) => {
       let stream = cloudinary.uploader.upload_stream(
@@ -33,6 +35,7 @@ exports.postLog = async (req, res) => {
     });
   };
 
+  // save location details to the database
   async function upload(req) {
     const result = await streamUpload(req);
     req.body.image = result.secure_url;

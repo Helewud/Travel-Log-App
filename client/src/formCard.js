@@ -1,39 +1,41 @@
 import React, { useState } from "react";
 import { useForm, useFormState } from "react-hook-form";
-import { createLogEntry } from "./api";
+import axios from "axios";
+const API_URL = process.env.REACT_APP_API;
 
-const LogForm = ({ location, onClose }) => {
-  //   let [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+// react-hook-form components controller
+const LogForm = ({ location, onClose, getEntries }) => {
   const { register, handleSubmit, control } = useForm();
-
   const { isSubmitted, isSubmitSuccessful } = useFormState({
     control,
   });
-  const onSubmit = async (data) => {
-    try {
-      const form = new FormData();
-      form.append("latitude", location.latitude);
-      form.append("longitude", location.longitude);
 
-      for (const key in data) {
-        form.append(key, data[key]);
-      }
-      form.set("image", data.image[0]);
-      setTimeout(() => {
-        createLogEntry(form);
-        onClose();
-      }, 10000);
-    } catch (error) {
-      setError(error.message);
+  // react-hook-form function to be called on submit
+  const onSubmit = (data) => {
+    const form = new FormData();
+    form.append("latitude", location.latitude);
+    form.append("longitude", location.longitude);
+
+    for (const key in data) {
+      form.append(key, data[key]);
     }
+
+    form.set("image", data.image[0]);
+
+    axios
+      .post(`${API_URL}/api/logs`, form)
+      .then((res) => {
+        onClose();
+      })
+      .catch((err) => console.log(err));
   };
 
+  // current date
   const currentDate = new Date(Date.now()).toISOString().split("T")[0];
 
   return (
+    //   react-hook-form form instance
     <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
-      {/* {error ? <small>{error}</small> : null} */}
       <input
         className="display-form start"
         {...register("title", { required: true })}
