@@ -74,8 +74,8 @@ function App() {
 
       {logEntries.map((location) => {
         return (
-          <>
-            {/* marker to show each saved location on the map */}
+          <React.Fragment key={location._id.split(0, 5)}>
+            {" "}
             <Marker
               key={location._id}
               latitude={location.latitude}
@@ -108,7 +108,6 @@ function App() {
                 </svg>
               </div>
             </Marker>
-
             {/* function to display the location details */}
             {showPopup[location._id] ? (
               <Popup
@@ -123,7 +122,6 @@ function App() {
                 <DisplayCard location={location} />
               </Popup>
             ) : null}
-
             {/* marker to  indicate new location to be saved */}
             {addEntryLocation ? (
               <>
@@ -174,7 +172,7 @@ function App() {
                 </Popup>
               </>
             ) : null}
-          </>
+          </React.Fragment>
         );
       })}
     </ReactMapGL>
